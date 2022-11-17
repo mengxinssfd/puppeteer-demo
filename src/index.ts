@@ -7,17 +7,20 @@ const puppeteer = require("puppeteer");
         width: 1920,
         height: 1080,
     });
-    await page.goto('https://www.bilibili.com');
+    // await page.goto('https://www.bilibili.com');
+    await page.goto('https://xiaojiju.com/');
     // await page.goto('http://localhost:8080/');
     await page.evaluate(() => {
-        document.querySelector("html").scrollTop = 2000;
+        const html = document.querySelector<HTMLLIElement>("html");
+        if (!html) return;
+        html.scrollTop = 2000;
     });
     // await page.waitFor(2000);
-    await page.waitForSelector("#bili_anime .pgc-rank-wrap");
+    await page.waitForSelector(".c-card");
 
     // 截图某个元素
-    const sel = await page.$("#bili_anime .pgc-rank");
-    await sel.screenshot({path: 'rank.png'});
+    // const sel = await page.$("#bili_anime .pgc-rank");
+    // await sel.screenshot({path: 'rank.png'});
 
     // evaluate返回promise
     const eh = await page.evaluateHandle(() => {
@@ -48,7 +51,8 @@ const puppeteer = require("puppeteer");
      });
      console.log('Dimensions:', dimensions);*/
 
-    await page.screenshot({path: 'example.png', fullPage: true});
+    // await page.screenshot({path: 'example.png', fullPage: true});
+    await page.screenshot({path: 'example.png', fullPage: false});
     // await page.pdf({path: 'hn.pdf', format: 'A4', printBackground: true});
     await browser.close();
 })();
